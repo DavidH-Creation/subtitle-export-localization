@@ -1,7 +1,7 @@
 ---
 name: subtitle-export-localization
 version: 0.1.0
-description: Localize Chinese drama, manhua-drama, and short-form scripted dialogue, narration, and on-screen text for subtitle-led overseas release. Use when the user wants bilingual scene rewrites, subtitle-ready dialogue, narration localization, meme and slang adaptation, or lighter-touch export localization without full story restructuring.
+description: Localize Chinese drama, manhua-drama, and scripted dialogue, narration, and on-screen text — from a single scene to a full multi-episode series — for subtitle-led overseas release. Use when the user wants bilingual scene rewrites, subtitle-ready dialogue, narration localization, meme and slang adaptation, or lighter-touch export localization without full story restructuring. Also use when the user provides a .docx script file for subtitle localization.
 ---
 
 # Subtitle Export Localization
@@ -46,6 +46,7 @@ Do not use this skill for:
 - target language (default: English)
 - subtitle mode or dub mode
 - episode pages or broader context
+- .docx file (Word document) containing script or screenplay
 
 If the user gives only a scene and no market, default to globally legible English for subtitle-led export.
 If the input is insufficient to determine speaker relationships or emotional register, ask the user before guessing.
@@ -117,6 +118,7 @@ Use the user's requested language if it is outside this list. Keep the same loca
 - Multi-version localization choice: use [`templates/multi-version-dialogue-sheet.md`](templates/multi-version-dialogue-sheet.md)
 - Raw script extraction: use [`templates/extract-sheet.md`](templates/extract-sheet.md)
 - QA self-check: use [`templates/qa-checklist.md`](templates/qa-checklist.md)
+- Full-series or multi-episode delivery: when output is too large for chat (50+ episodes, 2000+ lines), route final output through the docx skill to produce a Word document. See [`templates/extract-sheet.md`](templates/extract-sheet.md) for batch processing and glossary tracking guidance.
 
 ## Quality bar
 

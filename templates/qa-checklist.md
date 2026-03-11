@@ -44,6 +44,16 @@ Use this template as a final quality self-check before delivering localized outp
 | 14 | Bilingual format intact (Chinese source + target language) | | |
 | 15 | Extract IDs are unique and sequential (if extract stage was used) | | |
 
+## Series Consistency (skip for single-scene or single-episode work)
+
+| # | Check | Pass/Fail | Note |
+|---|-------|-----------|------|
+| 16 | All character names match the series glossary | | |
+| 17 | In-world proper nouns (factions, titles, artifacts) match the series glossary | | |
+| 18 | Recurring catchphrases and slang rendered consistently with prior episodes | | |
+| 19 | Character voice cards consulted — each character still sounds distinct and consistent with Episode 1 baseline | | |
+| 20 | No new English rendering introduced for a term already locked in the glossary | | |
+
 ## Summary
 
 - Total Pass:

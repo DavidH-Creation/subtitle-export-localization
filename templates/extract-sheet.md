@@ -10,6 +10,30 @@ Use this template to structure raw script text into translatable JSONL before fu
 
 When the user provides only a few pre-structured lines, skip this step and go directly to localization.
 
+## DOCX Preprocessing
+
+Use this step when the user provides a `.docx` file instead of pasted text.
+
+A `.docx` file is a ZIP archive containing XML. It cannot be read directly as plain text. Follow these steps in order:
+
+1. Extract the file using Python's `zipfile` module and read `word/document.xml` from inside the ZIP.
+2. Parse the XML to extract all `<w:t>` text run elements. Join runs without separator, and separate paragraphs with a newline.
+3. Write the extracted plain text to a UTF-8 encoded intermediate `.txt` file before any further processing. This step is mandatory for Chinese text — skipping it causes mojibake from incorrect encoding assumptions.
+4. `document.xml` inside a `.docx` can exceed 1 MB and will exceed direct read-tool limits. Always work from the intermediate `.txt` file, not the raw XML.
+5. Once you have the plain-text intermediate file, proceed with JSONL extraction below.
+
+If `python-docx` is available (`pip install python-docx`), prefer it over manual zipfile+xml parsing — it handles run splitting and paragraph styles automatically.
+
+```python
+# Minimal example using python-docx
+from docx import Document
+doc = Document('script.docx')
+with open('script_extracted.txt', 'w', encoding='utf-8') as f:
+    for para in doc.paragraphs:
+        if para.text.strip():
+            f.write(para.text + '\n')
+```
+
 ## Source Info
 
 - Series / episode:
@@ -56,3 +80,45 @@ One JSON object per line. All fields are strings unless noted.
 - This output feeds directly into Step 1 of the main localization workflow
 - The JSONL format is designed for batch processing: each line can be localized independently with its embedded context
 - For multi-episode batches, reset sequence numbering per episode
+
+## Series-Scale Batch Guidance
+
+Use this section when processing a full series (10+ episodes, 500+ extractable lines).
+
+### Chunking strategy
+
+- Process one episode at a time. Reset sequence numbering per episode (IDs restart at `_001`).
+- Keep each JSONL batch to roughly 300–400 lines before handing off to the localization step. This fits within safe context limits for most models.
+- Never merge multiple episodes into a single JSONL file for the localization step — the localization model needs episode-scoped context, not series-scoped context.
+
+### Glossary tracking
+
+Maintain a running glossary alongside the JSONL output. Lock entries after Episode 1 and never vary them across subsequent episodes.
+
+| Term (Chinese) | Approved English rendering | Notes |
+|---|---|---|
+| Character names | | One row per main and recurring character |
+| In-world proper nouns | | Faction names, place names, titles, artifacts |
+| Recurring slang or catchphrases | | Lock in after Ep 1, do not vary |
+| Honorifics kept verbatim | | e.g. 师尊, 殿下 — note if kept or swapped |
+
+Before localizing any episode beyond Episode 1, re-read the glossary. Do not introduce a new English rendering for any term already in the glossary.
+
+### Character voice cards
+
+After Episode 1 is complete, write one-line voice descriptors for all recurring characters. Reference this card at the start of each subsequent episode's localization pass.
+
+Example format:
+```
+男主: clipped, threat-forward, drops subjects. Never apologizes.
+女主: precise diction, dry humor, uses full sentences even under pressure.
+反派A: elaborate, formal register, addresses everyone as inferiors.
+```
+
+### Output routing for full-series delivery
+
+When total extractable lines exceed ~100 (roughly one mid-length episode), markdown tables in chat become impractical for the user.
+
+- At that threshold, confirm with the user: chat tables or Word document?
+- If Word document: complete all localization and QA first, then invoke the docx skill to format and deliver the final file.
+- Do not start the docx skill until all localization passes are complete.

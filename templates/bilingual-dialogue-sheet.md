@@ -1,6 +1,6 @@
-# Bilingual Dialogue Sheet
+# Bilingual Scene-Text Sheet
 
-Use this template for line-by-line localization.
+Use this template for line-by-line localization of dialogue, narration, and on-screen text.
 
 ## Scene Goal
 
@@ -10,11 +10,11 @@ Use this template for line-by-line localization.
 
 ## Lines
 
-| # | 中文原句 | 字面意思 | 本地化英文 | 调整说明 |
-|---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
+| # | 文本类型 | 中文原句 | 字面意思 | 本地化英文 | 调整说明 |
+|---|---|---|---|---|---|
+| 1 | dialogue / narration / card |  |  |  |  |
+| 2 | dialogue / narration / card |  |  |  |  |
+| 3 | dialogue / narration / card |  |  |  |  |
 
 ## Pass Notes
 

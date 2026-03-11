@@ -1,18 +1,18 @@
 # Localization Rules
 
-Use these rules when rewriting dialogue for subtitle-led export.
+Use these rules when rewriting dialogue, narration, and on-screen text for subtitle-led export.
 
 ## Core principle
 
 Translate function, not wording.
 
-The English line should preserve:
+The localized line should preserve:
 - intent
 - emotional force
 - power dynamic
 - scene utility
 
-The English line should not preserve:
+The localized line should not preserve:
 - Chinese sentence structure
 - redundant emotional labeling
 - culture-specific shorthand that will confuse viewers
@@ -66,6 +66,13 @@ Fix:
 - Let punchlines land fast.
 - Remove filler words unless they define character voice.
 
+## Narration and on-screen text defaults
+
+- Narration should read like viewer-facing copy, not internal script notes.
+- Scene cards and end tags should be sharp, compact, and platform-readable.
+- If a Chinese caption depends on local internet tone, replace it with a globally legible equivalent.
+- Preserve irony, dread, or humor, but avoid literal phrasing that feels translated.
+
 ## Character voice guardrails
 
 - Cold strategist: clipped, precise, controlled
@@ -80,3 +87,4 @@ Approve the line only if:
 - a native English-speaking actor could say it naturally
 - a subtitle reader could parse it instantly
 - the line still sounds like that character
+- narration and cards could appear on screen without sounding awkward

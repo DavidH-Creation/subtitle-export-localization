@@ -1,6 +1,6 @@
-# Multi-Version Dialogue Sheet
+# Multi-Version Scene-Text Sheet
 
-Use this template when the user wants version choices and/or multiple target languages.
+Use this template when the user wants version choices and/or multiple target languages for dialogue, narration, and on-screen text.
 
 ## Scene Goal
 
@@ -12,11 +12,11 @@ Use this template when the user wants version choices and/or multiple target lan
 
 ## Lines
 
-| # | 中文原句 | 字面意思 | Conservative | Balanced | Sharp | Risk note |
-|---|---|---|---|---|---|---|
-| 1 |  |  |  |  |  |  |
-| 2 |  |  |  |  |  |  |
-| 3 |  |  |  |  |  |  |
+| # | 文本类型 | 中文原句 | 字面意思 | Conservative | Balanced | Sharp | Risk note |
+|---|---|---|---|---|---|---|---|
+| 1 | dialogue / narration / card |  |  |  |  |  |  |
+| 2 | dialogue / narration / card |  |  |  |  |  |  |
+| 3 | dialogue / narration / card |  |  |  |  |  |  |
 
 ## Version Guide
 

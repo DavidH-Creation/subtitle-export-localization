@@ -1,4 +1,4 @@
 version: 1
 display_name: Subtitle Export Localization
-short_description: Localize Chinese scripted dialogue into subtitle-ready, internationally natural English with bilingual Chinese-English output.
-default_prompt: Localize this Chinese scripted dialogue for subtitle-led overseas release. Keep a Chinese-English bilingual format, remove translationese, and rewrite lines so they sound natural to international viewers.
+short_description: Localize Chinese scripted dialogue, narration, and on-screen text into subtitle-ready, internationally natural output with bilingual formatting.
+default_prompt: Localize this Chinese scripted scene text for subtitle-led overseas release. Keep a bilingual format, remove translationese, and rewrite dialogue, narration, and on-screen text so they feel natural to international viewers.

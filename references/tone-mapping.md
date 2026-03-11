@@ -53,3 +53,16 @@ Do not chase word-for-word meme equivalence. Match the social effect:
 - fandom-coded exaggeration
 
 If a direct meme equivalent feels dated, use neutral internet-native English instead.
+
+## Narration cards and end tags
+
+Do not translate subtitle cards or episode end tags as if they were ordinary spoken lines.
+
+Examples:
+- "已捕获S级供暖设备 x1" should be treated as a punchline card, not a literal inventory note
+- "动了不该动的东西？学生会执法队正在介入……" should read like a hook card for viewers
+
+Guideline:
+- Keep them short
+- Keep them clicky or dramatic when needed
+- Preserve episode-end hook energy over literal wording

@@ -18,6 +18,26 @@ The localized line should not preserve:
 - culture-specific shorthand that will confuse viewers
 - exaggerated phrasing that becomes cringe in English
 
+## Content scope — what to translate
+
+Subtitle localization translates only what the viewer sees or hears. Production-side material is reference context for the localizer, not translation input.
+
+**Translate:**
+- Spoken dialogue (the quoted lines characters say)
+- Narration and voiceover (旁白, 画外音)
+- On-screen text cards and status overlays (【】 cards, end-of-episode captions)
+- Episode titles
+
+**Do NOT translate — use as context only:**
+- Stage directions (△ action descriptions, blocking, expressions)
+- Scene headers (场 X-Y, INT/EXT, location labels)
+- Emotion/performance tags (（愤怒）, （冷笑）, [trembling])
+- Camera and editing cues (镜头切换, 特写, 推拉)
+- BGM and SFX markers
+- Character bios, story synopses, and other production reference material
+
+**Why this matters:** A raw Chinese drama script is typically 40–60% production notes by line count. Translating everything doubles cost and produces output the user cannot use as subtitles. Always triage before translating.
+
 ## Common failure modes
 
 ### 1. Translationese

@@ -32,6 +32,39 @@ Do not use this skill for:
 - Treat platform, sponsor, and cross-cultural safety as part of localization quality, not a separate afterthought.
 - When the user does not specify a target language, ask or default to English.
 - When the user does not specify a risk posture, output three variants: conservative, balanced, and sharp.
+- **Only translate viewer-facing content.** Strip all production-side material before translation. See Content Triage below.
+
+## Content triage
+
+Before translating anything, classify every line as viewer-facing or production-side. Only viewer-facing content goes into the translation pipeline. This step is mandatory — skipping it causes massive over-translation waste.
+
+### Viewer-facing (TRANSLATE)
+
+| Category | Chinese markers | Example |
+|----------|----------------|---------|
+| Dialogue | 角色名：/角色名（情绪）："台词" | 谢烈："老子不伺候了！" |
+| Narration / voiceover | 旁白：/ 画外音 | 旁白：三年后，A市 |
+| On-screen text cards | 【现况：...】/ 【字幕】 | 【已捕获S级供暖设备 x1】 |
+| Episode titles | 第X集：标题 | 第三集：血契·三十天奴隶 |
+| End-of-episode captions | 屏幕渐黑，字幕浮现 / （第X集完） | 【记忆可以抹去，但爱无法格式化。】 |
+
+### Production-side (STRIP — do not translate)
+
+| Category | Chinese markers | Example |
+|----------|----------------|---------|
+| Stage directions | △ 描述动作/表情/走位 | △ 她猛地睁开眼，泪水早已打湿了枕头。 |
+| Scene headers | 场 X-Y 日/夜 内/外 地点 | 场 41-3 日 外 医务室 |
+| Emotion/performance tags | （愤怒）/（颤抖）/（冷笑） | 谢烈（紧张）： |
+| Camera directions | 镜头切换/特写/推拉 | △ 镜头切换到后厨 |
+| BGM / SFX cues | BGM起/音效：/♪ | BGM：紧张配乐渐强 |
+| Character bios | 角色设定/人物小传 | 林清越（女主）：冰冷策略型… |
+| Story synopses | 剧情梗概/故事概述 | 故事概述：林清越误入清明大学… |
+
+### Edge cases
+
+- **Emotion tags inside dialogue attribution** (e.g., 谢烈（冷笑）："...") — strip the tag, translate only the quoted dialogue.
+- **Stage directions that contain viewer-visible text** (e.g., △ 屏幕浮现字幕："真相只有一个") — extract and translate only the quoted on-screen text.
+- **Dual-function lines** — classify by primary viewer-facing function. A narrator line that also works as a stage direction counts as narration if it would be heard/read by viewers.
 
 ## Intake
 
@@ -83,12 +116,13 @@ Use the user's requested language if it is outside this list. Keep the same loca
 
 ## Workflow
 
-0. Extract translatable text (when working from raw scripts).
-   Parse the raw script into structured JSONL using [`templates/extract-sheet.md`](templates/extract-sheet.md).
+0. **Content triage and extraction (MANDATORY for raw scripts).**
+   When the input is a raw script or .docx file, you MUST classify and filter content before any translation.
+   Apply the Content Triage table above: strip all production-side content, keep only viewer-facing lines.
+   Parse the viewer-facing lines into structured JSONL using [`templates/extract-sheet.md`](templates/extract-sheet.md).
    Each line gets: ID, type classification, speaker, raw text, scene tag, relationship, emotion, and previous-line context.
-   This reduces token cost for subsequent steps and provides consistent line tracking.
-   Use a lightweight model for this step when possible.
-   If the user provides pre-structured input or only a few lines, skip this step.
+   **Do NOT skip this step for raw scripts.** Skipping it causes over-translation — agents will translate stage directions, scene headers, and production notes that viewers never see, wasting tokens and producing unusable output.
+   If the user provides pre-structured input or only a few lines of dialogue, this step may be abbreviated but triage still applies.
 1. Identify the text function.
    Decide whether each line is dialogue, narration, subtitle card, exposition, threat, flirtation, humiliation, comedy, or emotional escalation.
 2. Diagnose why literal translation would fail.

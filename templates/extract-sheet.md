@@ -71,9 +71,32 @@ One JSON object per line. All fields are strings unless noted.
 - Keep `raw` verbatim: do not fix typos, normalize punctuation, or remove internet slang markers
 - `scene` and `emotion` are brief tags, not full descriptions
 - `prev_line` is a context summary for the localization model, not the literal previous dialogue line
-- Strip stage directions, camera notes, BGM cues, and production annotations — they are not translatable text
+- **Strip all production-side content** — it is NOT translatable text. Use it as context only.
 - If a line serves dual function (e.g. dialogue that is also an on-screen card), classify by primary viewer-facing function
 - Maintain sequential numbering within each episode; do not skip IDs
+
+### Content triage for Chinese drama scripts
+
+Apply this classification to every line before extraction. Only lines marked EXTRACT go into the JSONL output. Lines marked STRIP are read for context but never sent to translation.
+
+| Line pattern | Classification | Action |
+|---|---|---|
+| 角色名："台词" or 角色名：台词 | Dialogue | EXTRACT as `dialogue` |
+| 旁白：text / 画外音 | Narration | EXTRACT as `narration` |
+| 【现况：...】/ 【字幕：...】 | Status card | EXTRACT as `card` |
+| 第X集：标题 | Episode title | EXTRACT as `card` |
+| 屏幕渐黑，字幕浮现：【...】 | End-card caption | EXTRACT the 【】 content as `card` |
+| （第X集完） | Episode end tag | EXTRACT as `card` |
+| △ action/blocking/expression | Stage direction | STRIP — context only |
+| 场 X-Y 日/夜 内/外 地点 | Scene header | STRIP — context only |
+| 角色名（情绪标签）： | Emotion tag | STRIP — attach emotion to next dialogue line's `emotion` field |
+| 镜头切换/特写/推拉 | Camera cue | STRIP |
+| BGM/音效/♪ | Audio cue | STRIP |
+| 角色设定/人物小传/故事概述 | Production reference | STRIP |
+
+**Critical:** When stage directions contain embedded viewer-visible text (e.g., △ 屏幕上浮现文字："真相只有一个"), extract only the quoted on-screen text, not the stage direction wrapper.
+
+**Ratio check:** In a typical Chinese drama script, 40–60% of lines are production-side. If your JSONL output contains nearly as many lines as the raw input, you are probably extracting production content. Re-check your triage.
 
 ## Notes
 

@@ -1,5 +1,6 @@
 ---
 name: subtitle-export-localization
+version: 0.1.0
 description: Localize Chinese drama, manhua-drama, and short-form scripted dialogue, narration, and on-screen text for subtitle-led overseas release. Use when the user wants bilingual scene rewrites, subtitle-ready dialogue, narration localization, meme and slang adaptation, or lighter-touch export localization without full story restructuring.
 ---
 
@@ -34,18 +35,20 @@ Do not use this skill for:
 
 ## Intake
 
-Accept any subset of:
-- raw dialogue
-- narration
-- on-screen text
-- scene excerpt
-- episode pages
-- character notes
+### Minimum required input
+
+- At least one of: raw dialogue, narration, on-screen text, or scene excerpt
+
+### Optional enrichment
+
+- character notes or relationship map
 - target market or tone target
-- target language
+- target language (default: English)
 - subtitle mode or dub mode
+- episode pages or broader context
 
 If the user gives only a scene and no market, default to globally legible English for subtitle-led export.
+If the input is insufficient to determine speaker relationships or emotional register, ask the user before guessing.
 
 ## Supported default language lanes
 
@@ -67,18 +70,29 @@ Use the user's requested language if it is outside this list. Keep the same loca
 - Read [`references/localization-rules.md`](references/localization-rules.md) for core rewrite rules for dialogue, narration, and subtitle cards.
 - Read [`references/tone-mapping.md`](references/tone-mapping.md) when the scene depends on flirting, threats, meme language, or stylized banter.
 - Read [`references/language-lanes.md`](references/language-lanes.md) when the user wants Spanish, Japanese, Korean, Thai, Indonesian, Vietnamese, Portuguese (Brazil), or multi-language comparison.
+- Read [`references/culture-adaptation.md`](references/culture-adaptation.md) when the scene contains culture-locked references (marriage customs, internet slang, class markers, folk beliefs, etc.) that need adaptation for international viewers.
 - Read [`references/export-safety-red-lines.md`](references/export-safety-red-lines.md) when the scene contains sensitive power dynamics, religion, politics, identity language, minors, coercion, or taboo content.
 - Use [`templates/bilingual-dialogue-sheet.md`](templates/bilingual-dialogue-sheet.md) for line-by-line output.
 - Use [`templates/scene-pass-summary.md`](templates/scene-pass-summary.md) when the user wants a quick assessment before rewriting.
 - Use [`templates/safety-review.md`](templates/safety-review.md) when the user wants a risk pass or when the scene is obviously sensitive.
 - Use [`templates/multi-version-dialogue-sheet.md`](templates/multi-version-dialogue-sheet.md) when the user wants version selection or language selection.
+- Use [`templates/extract-sheet.md`](templates/extract-sheet.md) when preprocessing raw scripts into structured JSONL before localization.
+- Use [`templates/qa-checklist.md`](templates/qa-checklist.md) for final quality assurance self-check.
+- Read [`references/subtitle-constraints.md`](references/subtitle-constraints.md) for character limits, reading speed, and line break rules.
 
 ## Workflow
 
+0. Extract translatable text (when working from raw scripts).
+   Parse the raw script into structured JSONL using [`templates/extract-sheet.md`](templates/extract-sheet.md).
+   Each line gets: ID, type classification, speaker, raw text, scene tag, relationship, emotion, and previous-line context.
+   This reduces token cost for subsequent steps and provides consistent line tracking.
+   Use a lightweight model for this step when possible.
+   If the user provides pre-structured input or only a few lines, skip this step.
 1. Identify the text function.
    Decide whether each line is dialogue, narration, subtitle card, exposition, threat, flirtation, humiliation, comedy, or emotional escalation.
 2. Diagnose why literal translation would fail.
    Flag stiffness, culture-locked wording, over-explaining, meme mismatch, or melodrama that will sound awkward in English.
+   For culture-locked references, select an adaptation strategy from [`references/culture-adaptation.md`](references/culture-adaptation.md): effect-equivalent swap, generalize, preserve + micro-gloss, or drop and rewrite.
 3. Select the target language and tone lane.
    Decide whether the line should feel safer, balanced, or sharper in the target market.
 4. Rewrite into export-legible target-language scene text.
@@ -101,6 +115,8 @@ Use the user's requested language if it is outside this list. Keep the same loca
 - Line-by-line bilingual localization: use [`templates/bilingual-dialogue-sheet.md`](templates/bilingual-dialogue-sheet.md)
 - Sensitive-content review: use [`templates/safety-review.md`](templates/safety-review.md)
 - Multi-version localization choice: use [`templates/multi-version-dialogue-sheet.md`](templates/multi-version-dialogue-sheet.md)
+- Raw script extraction: use [`templates/extract-sheet.md`](templates/extract-sheet.md)
+- QA self-check: use [`templates/qa-checklist.md`](templates/qa-checklist.md)
 
 ## Quality bar
 

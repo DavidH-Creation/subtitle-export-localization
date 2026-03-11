@@ -2,3 +2,10 @@ version: 1
 display_name: Subtitle Export Localization
 short_description: Localize Chinese scripted dialogue, narration, and on-screen text into subtitle-ready, internationally natural output with bilingual formatting.
 default_prompt: Localize this Chinese scripted scene text for subtitle-led overseas release. Keep a bilingual format, remove translationese, and rewrite dialogue, narration, and on-screen text so they feel natural to international viewers.
+example_prompts:
+  - "把这段病娇对白做成出海字幕，给我三档版本"
+  - "Extract translatable text from this raw script into JSONL"
+  - "Run a safety review on these localized subtitle lines"
+  - "Compare English, Japanese, and Korean versions of this dialogue"
+  - "帮我把这集的旁白卡和屏幕文字做本地化"
+  - "这段对白有没有出海红线问题？帮我审一下"

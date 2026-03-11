@@ -1,22 +1,59 @@
 # subtitle-export-localization
 
-A Codex skill for subtitle-led export localization of Chinese scripted dialogue.
+这是一个面向 Codex 的字幕出海本地化 skill，专门用于把中文剧情对白处理成更适合海外观众接受的字幕版本。
 
-It focuses on:
+它不做大纲级重构，也不负责完整的市场路线判断，而是聚焦在“台词怎么翻得更像本地人会说的话，同时又尽量保留原意和张力”。
 
-- bilingual source-to-target dialogue sheets
-- conservative / balanced / sharp variant output
-- subtitle-friendly localization rather than literal translation
-- cross-market safety review for political, religious, identity, coercion, and other export-sensitive lines
-- multiple language lanes including English, Spanish, Japanese, Korean, Thai, Indonesian, Vietnamese, and Portuguese (Brazil)
+## 这个 skill 主要解决什么问题
 
-## Structure
+- 中文台词直译后容易出现翻译腔
+- 一些网感梗、羞辱、威胁、暧昧、病娇感台词，直接翻成英文或其他语言会显得尴尬、过火，或者踩线
+- 同一句台词在不同平台、不同市场，需要不同风险等级的版本
+- 出海字幕不只是翻译，还要考虑政治、宗教、身份、未成年、强迫关系等敏感问题
 
-- `SKILL.md`: main skill instructions
-- `agents/openai.yaml`: UI metadata
-- `references/`: localization rules, tone mapping, language lanes, and safety red lines
-- `templates/`: bilingual, multi-version, and safety review output templates
+## 它会做什么
 
-## Install
+- 输出中外文对照的台词本地化版本
+- 默认提供三档版本：
+  - `Conservative`：更安全，适合广泛平台和 sponsor 敏感场景
+  - `Balanced`：默认推荐，尽量保留原台词的戏剧效果
+  - `Sharp`：张力更强，但会附带风险提示
+- 支持多语言分路，包括：
+  - English
+  - Spanish
+  - Japanese
+  - Korean
+  - Thai
+  - Indonesian
+  - Vietnamese
+  - Portuguese (Brazil)
+- 对高风险台词做额外的出海安全审查
 
-Copy this skill into your Codex skills directory, or install it from GitHub with your preferred workflow.
+## 仓库结构
+
+- `SKILL.md`
+  skill 主说明，定义使用场景、工作流和输出方式
+- `agents/openai.yaml`
+  给 Codex / UI 使用的元信息
+- `references/`
+  本地化规则、语气映射、语言分路、出海红线审查规则
+- `templates/`
+  中外文对照、多版本对照、安全审查的输出模板
+
+## 适合的使用场景
+
+- 中文短剧、漫剧、网文改编剧的字幕出海
+- 女频、怪谈、悬疑、病娇、强设定类对白本地化
+- 想保留原作味道，但又不希望海外字幕显得生硬或翻车
+- 希望同一句台词一次产出多个风险等级版本，方便选择
+
+## 不适合的使用场景
+
+- 完整剧本结构改编
+- 海外发行市场路线选择
+- 制作方式决策
+- 单纯逐字直译
+
+## 安装方式
+
+可以把这个 skill 复制到本地 Codex skills 目录中使用，也可以通过 GitHub 仓库按你的工作流进行安装。

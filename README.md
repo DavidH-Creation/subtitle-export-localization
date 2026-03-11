@@ -1,5 +1,13 @@
 # subtitle-export-localization
 
+> Subtitle-first export localization skill for Chinese scripted dialogue.
+
+## 导览 / Overview
+
+- 中文说明见下方 `中文`
+- English documentation starts at `English`
+- 核心目录：`SKILL.md`、`agents/`、`references/`、`templates/`
+
 ## 中文
 
 这是一个面向 Codex 的字幕出海本地化 skill，专门用于把中文剧情对白处理成更适合海外观众接受的字幕版本。
@@ -58,7 +66,19 @@
 
 ### 安装方式
 
-可以把这个 skill 复制到本地 Codex skills 目录中使用，也可以通过 GitHub 仓库按你的工作流进行安装。
+#### Codex
+
+```bash
+git clone https://github.com/DavidH-Creation/subtitle-export-localization.git ~/.codex/skills/subtitle-export-localization
+```
+
+#### Claude Code
+
+```bash
+git clone https://github.com/DavidH-Creation/subtitle-export-localization.git ~/.claude/skills/subtitle-export-localization
+```
+
+也可以按你的工作流把这个 skill 复制到本地 skills 目录中使用。
 
 ---
 
@@ -93,7 +113,7 @@ It does not do outline-level restructuring or full market-route planning. Instea
   - Portuguese (Brazil)
 - Adds an extra export-safety review for high-risk lines
 
-### Repository structure
+### Repository Structure
 
 - `SKILL.md`
   Main skill instructions defining the use cases, workflow, and output shape
@@ -120,4 +140,16 @@ It does not do outline-level restructuring or full market-route planning. Instea
 
 ### Installation
 
-You can copy this skill into your local Codex skills directory, or install it from this GitHub repository using your preferred workflow.
+#### Codex
+
+```bash
+git clone https://github.com/DavidH-Creation/subtitle-export-localization.git ~/.codex/skills/subtitle-export-localization
+```
+
+#### Claude Code
+
+```bash
+git clone https://github.com/DavidH-Creation/subtitle-export-localization.git ~/.claude/skills/subtitle-export-localization
+```
+
+You can also copy this skill into your local skills directory using your preferred workflow.

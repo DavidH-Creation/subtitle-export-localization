@@ -140,8 +140,14 @@ Example format:
 
 ### Output routing for full-series delivery
 
-When total extractable lines exceed ~100 (roughly one mid-length episode), markdown tables in chat become impractical for the user.
+Use the unified thresholds from SKILL.md:
 
-- At that threshold, confirm with the user: chat tables or Word document?
-- If Word document: complete all localization and QA first, then invoke the docx skill to format and deliver the final file.
-- Do not start the docx skill until all localization passes are complete.
+| Scale | Extracted lines | Output format |
+|-------|----------------|---------------|
+| Small | ≤100 | Markdown tables in chat |
+| Medium | 101–500 | Default to Word document; user may opt for markdown |
+| Large | 501+ | Word document (`scripts/to_docx.py` or docx skill) |
+
+- For Word output: complete all localization and QA first, then generate the document.
+- Use `scripts/to_docx.py` for lightweight Word generation. Use the docx skill (`anthropic-skills:docx`) when polished formatting is needed.
+- Do not start document generation until all localization passes are complete.

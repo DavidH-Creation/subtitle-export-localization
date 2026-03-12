@@ -8,6 +8,11 @@ description: Localize Chinese drama, manhua-drama, and scripted dialogue, narrat
 
 Treat this skill as a subtitle-first scene-text localization workflow. Rewrite dialogue, narration, subtitle cards, and viewer-facing on-screen text so they read naturally to international audiences while preserving scene function, emotional temperature, and character dynamics.
 
+## Dependencies
+
+- **python-docx** (`pip install python-docx`): Required by `scripts/extract_docx.py` and `scripts/to_docx.py` for .docx parsing and generation. Falls back to `zipfile + xml.etree` for extraction if unavailable.
+- **docx skill** (`anthropic-skills:docx`): Optional. Used for polished Word document output with advanced formatting. If unavailable, use `scripts/to_docx.py` as a lightweight fallback.
+
 ## Scope
 
 Use this skill for:
@@ -114,6 +119,8 @@ Use the user's requested language if it is outside this list. Keep the same loca
 - Use [`templates/qa-checklist.md`](templates/qa-checklist.md) for final quality assurance self-check.
 - Read [`references/subtitle-constraints.md`](references/subtitle-constraints.md) for character limits, reading speed, and line break rules.
 
+**Batch override:** For batch tasks (10+ episodes), load all reference files once before starting Episode 1. Do not re-read per episode.
+
 ## Workflow
 
 0. **Content triage and extraction (MANDATORY for raw scripts).**
@@ -123,6 +130,7 @@ Use the user's requested language if it is outside this list. Keep the same loca
    Each line gets: ID, type classification, speaker, raw text, scene tag, relationship, emotion, and previous-line context.
    **Do NOT skip this step for raw scripts.** Skipping it causes over-translation — agents will translate stage directions, scene headers, and production notes that viewers never see, wasting tokens and producing unusable output.
    If the user provides pre-structured input or only a few lines of dialogue, this step may be abbreviated but triage still applies.
+   **Automation shortcut:** For .docx input, run `scripts/extract_docx.py` to extract text, then `scripts/triage.py` to auto-classify lines and generate JSONL. This replaces manual line-by-line triage and is strongly recommended for scripts over 100 lines.
 1. Identify the text function.
    Decide whether each line is dialogue, narration, subtitle card, exposition, threat, flirtation, humiliation, comedy, or emotional escalation.
 2. Diagnose why literal translation would fail.
@@ -144,6 +152,28 @@ Use the user's requested language if it is outside this list. Keep the same loca
 8. Do a final subtitle pass.
    Trim lines that read too long, too on-the-nose, or too translated.
 
+## Batch workflow (10+ episodes)
+
+When the input exceeds 10 episodes or 500 extracted viewer-facing lines, use this streamlined batch flow instead of the 8-step per-line workflow above.
+
+1. **Preprocessing (one-time):**
+   - Run `scripts/extract_docx.py` to extract plain text from .docx.
+   - Run `scripts/triage.py` to auto-classify and generate JSONL with triage report.
+   - Build a series glossary (character names, in-world terms, catchphrases) — lock after Episode 1.
+   - Write character voice cards (one-line voice descriptors per character).
+   - Load ALL reference files once upfront (see "Load only what is needed" — batch override).
+
+2. **Per-episode translation (independent per episode):**
+   - Load the episode's JSONL slice + glossary + voice cards.
+   - Merge Steps 1–6 into a single pass: output the bilingual table directly without separate diagnosis steps.
+   - Run safety review only on lines with high-risk emotion tags (threats, possession, coercion) or lines touching Categories 4–5.
+   - Skip three-version output unless the user requests it — default to balanced only for batch speed.
+
+3. **Batch QA and delivery (one-time, after all episodes):**
+   - Run `templates/qa-checklist.md` across the full series.
+   - Verify glossary consistency (no term drift between episodes).
+   - Generate final output via `scripts/to_docx.py` or the docx skill.
+
 ## Output modes
 
 - Quick diagnosis: use [`templates/scene-pass-summary.md`](templates/scene-pass-summary.md)
@@ -152,7 +182,17 @@ Use the user's requested language if it is outside this list. Keep the same loca
 - Multi-version localization choice: use [`templates/multi-version-dialogue-sheet.md`](templates/multi-version-dialogue-sheet.md)
 - Raw script extraction: use [`templates/extract-sheet.md`](templates/extract-sheet.md)
 - QA self-check: use [`templates/qa-checklist.md`](templates/qa-checklist.md)
-- Full-series or multi-episode delivery: when output is too large for chat (50+ episodes, 2000+ lines), route final output through the docx skill to produce a Word document. See [`templates/extract-sheet.md`](templates/extract-sheet.md) for batch processing and glossary tracking guidance.
+- Full-series or multi-episode delivery: use the output routing thresholds below to decide format.
+
+### Output routing thresholds
+
+| Scale | Extracted lines | Output format |
+|-------|----------------|---------------|
+| Small | ≤100 | Markdown tables in chat |
+| Medium | 101–500 | Default to Word document; user may opt for markdown |
+| Large | 501+ | Word document (`scripts/to_docx.py` or docx skill) |
+
+For Word output, complete all localization and QA passes first, then generate the document. See [`templates/extract-sheet.md`](templates/extract-sheet.md) for batch processing and glossary tracking guidance.
 
 ## Quality bar
 

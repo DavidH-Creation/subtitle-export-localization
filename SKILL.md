@@ -1,6 +1,6 @@
 ---
 name: subtitle-export-localization
-version: 0.2.0
+version: 0.3.0
 description: Localize Chinese drama, manhua-drama, and scripted dialogue, narration, and on-screen text — from a single scene to a full multi-episode series — for subtitle-led overseas release. Use when the user wants bilingual scene rewrites, subtitle-ready dialogue, narration localization, meme and slang adaptation, or lighter-touch export localization without full story restructuring. Also use when the user provides a .docx script file for subtitle localization.
 ---
 
@@ -38,17 +38,17 @@ Before translating anything, classify every line as viewer-facing or production-
 | Episode titles | 第X集：标题 | 第三集：血契·三十天奴隶 |
 | End-of-episode captions | 屏幕渐黑，字幕浮现 / （第X集完） | 【记忆可以抹去，但爱无法格式化。】 |
 
-### Production-side (STRIP — do not translate)
+### Production-side (do not subtitle)
 
-| Category | Chinese markers | Example |
-|----------|----------------|---------|
-| Stage directions | △ 描述动作/表情/走位 | △ 她猛地睁开眼，泪水早已打湿了枕头。 |
-| Scene headers | 场 X-Y 日/夜 内/外 地点 | 场 41-3 日 外 医务室 |
-| Emotion/performance tags | （愤怒）/（颤抖）/（冷笑） | 谢烈（紧张）： |
-| Camera directions | 镜头切换/特写/推拉 | △ 镜头切换到后厨 |
-| BGM / SFX cues | BGM起/音效：/♪ | BGM：紧张配乐渐强 |
-| Character bios | 角色设定/人物小传 | 林清越（女主）：冰冷策略型… |
-| Story synopses | 剧情梗概/故事概述 | 故事概述：林清越误入清明大学… |
+| Category | Chinese markers | Handling |
+|----------|----------------|----------|
+| Stage directions | △ 描述动作/表情/走位 | **Render as English context** in bilingual sheets (concise, viewer-facing phrasing). Do NOT generate subtitles from them. |
+| Scene headers | 场 X-Y 日/夜 内/外 地点 | Convert to standardized English scene header format (see Canonical Output Format). |
+| Emotion/performance tags | （愤怒）/（颤抖）/（冷笑） | Move into dialogue table's first column as English parenthetical. Strip from the quoted dialogue. |
+| Camera directions | 镜头切换/特写/推拉 | Strip completely. |
+| BGM / SFX cues | BGM起/音效：/♪ | Strip completely. |
+| Character bios | 角色设定/人物小传 | Strip. Use internally for voice consistency, but do not include in output. |
+| Story synopses | 剧情梗概/故事概述 | Strip completely. |
 
 ### Edge cases
 
@@ -66,6 +66,7 @@ Before translating anything, classify every line as viewer-facing or production-
 2. **Overheated melodrama** — Chinese line is fun on the page but too theatrical in English. Fix: keep the energy but lower the verbal temperature; let rhythm and implication carry the threat or flirtation.
 3. **Culture-locked slang** — net slang, fandom terms with no direct English equivalent. Fix: replace with an English-language social equivalent; if none exists, rewrite for scene effect.
 4. **Exposition overload** — line explains more than a subtitle should. Fix: cut to the actionable emotional point.
+5. **Spatial/directional inversion** — Misreading who goes to whom, who initiates an action, or where something happens. Fix: before translating, confirm the physical setup of the scene (who moves, who stays, who brings what where). Never introduce spatial relationships that aren't in the source. Example: 带个石头人来挂急诊 = "brought a petrified patient to the ER," NOT "house call" (which implies the doctor went to the patient).
 
 ### Character voice guardrails
 
@@ -170,7 +171,20 @@ For tone-sensitive scenes (threats, flirtation, memes, possessive lines), read `
 
 For non-English targets, read `references/language-lanes.md` for language-specific pitfalls.
 
-**Batch mode (10+ episodes):** Default to balanced version only for speed. Build a series glossary after Episode 1 (character names, proper nouns, catchphrases) and lock it. Write one-line character voice cards after Episode 1 and reference them for all subsequent episodes. Process one episode at a time; never merge episodes.
+### Batch mode (10+ episodes)
+
+Default to balanced version only for speed. Build a series glossary after Episode 1 (character names, proper nouns, catchphrases) and lock it. Write one-line character voice cards after Episode 1 and reference them for all subsequent episodes. Process one episode at a time; never merge episodes.
+
+### Parallel batch orchestration (subagent mode)
+
+When splitting work across multiple agents (e.g., 50 episodes split into 5 batches of 10):
+
+1. **Format lock:** Every agent MUST follow the Canonical Output Format above exactly. Copy the format spec into each agent's prompt. No agent may invent its own header style, scene card format, or table layout.
+2. **Glossary lock:** The orchestrating agent builds the character glossary and voice cards from Episode 1, then passes the locked glossary to every batch agent. Every agent uses the same character names, term translations, and voice descriptions.
+3. **Episode splitting:** Split on episode boundaries only. Never split mid-episode. Use source line numbers to define each batch. Include 1 episode of overlap context (the last episode of the previous batch) so each agent can maintain continuity, but only output its assigned episodes.
+4. **Boundary check:** After all agents complete, the orchestrating agent must verify that no episode is missing or duplicated. Check the first and last episode of each batch output.
+5. **Output file naming:** Each batch writes to a separate file (`guize_out_b1.md`, `guize_out_b2.md`, etc.). The orchestrating agent merges them in order.
+6. **Format in prompt:** When dispatching to subagents, include the exact format spec (episode header, scene header, state card, action line, dialogue table) as part of the prompt — do not rely on the agent reading SKILL.md.
 
 ### Phase 3: Review and deliver
 
@@ -188,21 +202,74 @@ For non-English targets, read `references/language-lanes.md` for language-specif
    - For multi-episode: glossary consistency verified across episodes
 4. **Output format:** Markdown tables for ≤100 lines; Word document for 101+ (use `scripts/to_docx.py` if python-docx is available, otherwise output markdown).
 
-## Output templates
+## Canonical output format
 
-### Bilingual dialogue sheet
+All output MUST use this exact format. No variation allowed — this is the format lock that ensures cross-batch consistency when multiple agents process different episode batches in parallel.
+
+### Episode header (one per episode)
+```
+## EP XX · 中文集名 / English Episode Title
+```
+Always `##` (H2). Always `EP` + zero-padded number. Always CN title + ` / ` + English title on ONE line. Never use two lines. Never use `#` (H1) for episode headers.
+
+### Scene header
+```
+### SCENE X-Y · Night/Day · Int/Ext · Location · *[beat tag]*
+```
+Always `###` (H3). Beat tag in italics inside brackets. Use production tags where applicable: `[Payoff]`, `[Ignition]`, `[Conflict]`, `[Reversal]`, `[Paywall hook]`.
+
+### Scene state card
+```
+`English scene state description only — no Chinese.`
+```
+One backtick-wrapped line. English only. Concise (under 15 words). Translates the `【现况：...】` marker.
+
+### Stage directions (action lines)
+```
+> △ Concise English action description.
+```
+Blockquote with `△` prefix. Concise, present tense, viewer-facing phrasing. No Chinese.
+
+### Dialogue table (3-variant)
+```
+| Character（emotion/action in English） | "Chinese source line" |
+|---|---|
+| **Conservative** | English subtitle |
+| **Balanced** | English subtitle |
+| **Sharp** | English subtitle |
+| *Note* | Localization note (only when non-obvious) |
+```
+First row: character name in original Chinese + English emotion parenthetical + Chinese source in quotes. Subsequent rows: the three variants. Note row is optional.
+
+Never use `/` inside a subtitle line to indicate line breaks. If a subtitle needs two lines, write the full two-line version without break markers.
+
+### Subtitle cards (字幕卡 / end cards)
+```
+| 【字幕卡】 | Chinese text |
+|---|---|
+| **Conservative** | English |
+| **Balanced** | English |
+| **Sharp** | English |
+```
+
+### Episode end marker
+```
+*(EP XX END)*
+```
+
+## Output templates (for non-scene-based output)
+
+### Bilingual dialogue sheet (flat table, for quick-pass output)
 
 | # | 文本类型 | 中文原句 | 字面意思 | 本地化英文 | 调整说明 |
 |---|---|---|---|---|---|
 | 1 | dialogue / narration / card | | | | |
 
-### Multi-version dialogue sheet
+### Multi-version dialogue sheet (flat table, for comparison output)
 
 | # | 文本类型 | 中文原句 | 字面意思 | Conservative | Balanced | Sharp | Risk note |
 |---|---|---|---|---|---|---|---|
 | 1 | dialogue / narration / card | | | | | | |
-
-Version guide: Conservative = safest for broad platforms; Balanced = default recommendation, closest to original effect; Sharp = stronger edge, include risk note.
 
 ### Safety review snapshot
 

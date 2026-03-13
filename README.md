@@ -42,13 +42,17 @@
 ### 仓库结构
 
 - `SKILL.md`
-  skill 主说明，定义使用场景、工作流和输出方式
+  skill 主说明，自包含核心本地化规则、安全框架、字幕约束和输出模板
 - `agents/openai.yaml`
   给 Codex / UI 使用的元信息
 - `references/`
-  本地化规则、语气映射、语言分路、出海红线审查规则
+  补充参考文件（语气映射、文化适配、多语言分路），按需加载
 - `templates/`
-  中外文对照、多版本对照、安全审查的输出模板
+  JSONL 提取规范模板
+- `examples/`
+  端到端工作流示例（旁白卡、病娇对白）
+- `scripts/`
+  可选 Python 工具（docx 提取、自动分拣、Word 输出）
 
 ### 适合的使用场景
 
@@ -116,13 +120,17 @@ It does not do outline-level restructuring or full market-route planning. Instea
 ### Repository Structure
 
 - `SKILL.md`
-  Main skill instructions defining the use cases, workflow, and output shape
+  Self-contained skill instructions with inlined localization rules, safety framework, subtitle constraints, and output templates
 - `agents/openai.yaml`
   Metadata used by Codex / UI
 - `references/`
-  Localization rules, tone mapping, language lanes, and export safety review rules
+  Supplementary reference files (tone mapping, culture adaptation, language lanes) loaded on demand
 - `templates/`
-  Output templates for bilingual comparison, multi-version comparison, and safety review
+  JSONL extraction specification template
+- `examples/`
+  End-to-end workflow examples (narration cards, yandere dialogue)
+- `scripts/`
+  Optional Python utilities (docx extraction, auto-triage, Word output)
 
 ### Best fit use cases
 

@@ -1,43 +1,28 @@
 ---
 name: subtitle-export-localization
-version: 0.1.0
+version: 0.2.0
 description: Localize Chinese drama, manhua-drama, and scripted dialogue, narration, and on-screen text — from a single scene to a full multi-episode series — for subtitle-led overseas release. Use when the user wants bilingual scene rewrites, subtitle-ready dialogue, narration localization, meme and slang adaptation, or lighter-touch export localization without full story restructuring. Also use when the user provides a .docx script file for subtitle localization.
 ---
 
 # Subtitle Export Localization
 
-Treat this skill as a subtitle-first scene-text localization workflow. Rewrite dialogue, narration, subtitle cards, and viewer-facing on-screen text so they read naturally to international audiences while preserving scene function, emotional temperature, and character dynamics.
-
-## Dependencies
-
-- **python-docx** (`pip install python-docx`): Required by `scripts/extract_docx.py` and `scripts/to_docx.py` for .docx parsing and generation. Falls back to `zipfile + xml.etree` for extraction if unavailable.
-- **docx skill** (`anthropic-skills:docx`): Optional. Used for polished Word document output with advanced formatting. If unavailable, use `scripts/to_docx.py` as a lightweight fallback.
+Subtitle-first scene-text localization workflow. Rewrite dialogue, narration, subtitle cards, and viewer-facing on-screen text so they read naturally to international audiences while preserving scene function, emotional temperature, and character dynamics.
 
 ## Scope
 
-Use this skill for:
-- Chinese-to-English subtitle localization
-- Chinese-English bilingual scene-text sheets
-- narration and on-screen text localization
-- Meme, slang, insult, flirtation, and threat adaptation
-- Soft export localization when the user does not want a full adaptation package
+Use for: Chinese-to-English (or other target language) subtitle localization, bilingual scene-text sheets, narration and on-screen text localization, meme/slang/insult/flirtation/threat adaptation, soft export localization.
 
-Do not use this skill for:
-- full market route selection
-- major story restructuring
-- production format decisions
+Do not use for: full market route selection, major story restructuring, production format decisions.
 
 ## Operating defaults
 
-- Localize rather than translate literally.
-- Preserve intent, subtext, power dynamic, and hook.
-- Default to concise, subtitle-friendly English.
-- Prefer lines a native English-speaking viewer would accept immediately.
-- Keep Chinese source lines in the output unless the user explicitly asks for English only.
-- Treat platform, sponsor, and cross-cultural safety as part of localization quality, not a separate afterthought.
-- When the user does not specify a target language, ask or default to English.
+- Localize rather than translate literally. Preserve intent, subtext, power dynamic, and hook.
+- Default to concise, subtitle-friendly English. Prefer lines a native English-speaking viewer would accept immediately.
+- Keep Chinese source lines in output unless the user explicitly asks for English only.
+- Treat platform, sponsor, and cross-cultural safety as part of localization quality.
+- When the user does not specify a target language, default to English.
 - When the user does not specify a risk posture, output three variants: conservative, balanced, and sharp.
-- **Only translate viewer-facing content.** Strip all production-side material before translation. See Content Triage below.
+- Only translate viewer-facing content. Strip all production-side material before translation.
 
 ## Content triage
 
@@ -68,151 +53,184 @@ Before translating anything, classify every line as viewer-facing or production-
 ### Edge cases
 
 - **Emotion tags inside dialogue attribution** (e.g., 谢烈（冷笑）："...") — strip the tag, translate only the quoted dialogue.
-- **Stage directions that contain viewer-visible text** (e.g., △ 屏幕浮现字幕："真相只有一个") — extract and translate only the quoted on-screen text.
-- **Dual-function lines** — classify by primary viewer-facing function. A narrator line that also works as a stage direction counts as narration if it would be heard/read by viewers.
+- **Stage directions containing viewer-visible text** (e.g., △ 屏幕浮现字幕："真相只有一个") — extract and translate only the quoted on-screen text.
+- **Dual-function lines** — classify by primary viewer-facing function.
+
+## Core localization rules
+
+**Principle: translate function, not wording.** Preserve intent, emotional force, power dynamic, and scene utility. Do not preserve Chinese sentence structure, redundant emotional labeling, or culture-specific shorthand that confuses viewers.
+
+### Common failure modes
+
+1. **Translationese** — "You think you won?" / "This matter is not over." Fix: rewrite into native spoken English with shorter, sharper constructions.
+2. **Overheated melodrama** — Chinese line is fun on the page but too theatrical in English. Fix: keep the energy but lower the verbal temperature; let rhythm and implication carry the threat or flirtation.
+3. **Culture-locked slang** — net slang, fandom terms with no direct English equivalent. Fix: replace with an English-language social equivalent; if none exists, rewrite for scene effect.
+4. **Exposition overload** — line explains more than a subtitle should. Fix: cut to the actionable emotional point.
+
+### Character voice guardrails
+
+| Archetype | Voice |
+|-----------|-------|
+| Cold strategist | clipped, precise, controlled |
+| Arrogant fighter | blunt, hot-blooded, contemptuous |
+| Rational enforcer | formal, exact, low-emotion |
+| Possessive lover | intimate, invasive, emotionally loaded |
+| Trickster / tease | playful, sharp, lightly ironic |
+
+### Localization test
+
+Approve the line only if: (1) a native English-speaking actor could say it naturally, (2) a subtitle reader could parse it instantly, (3) the line still sounds like that character, (4) narration and cards could appear on screen without sounding awkward.
+
+### Subtitle mode defaults
+
+- Prefer one short sentence over two medium ones.
+- Avoid dense subordinate clauses. Let punchlines land fast.
+- Remove filler words unless they define character voice.
+- Narration should read like viewer-facing copy, not internal script notes.
+- Scene cards and end tags should be sharp, compact, and platform-readable.
+
+## Safety framework
+
+Do not let localization accidentally intensify a scene into hate speech, religious contempt, political messaging, minor sexualization, coercive romance framed as aspirational, or abuse fetishization. When the original scene is dark, keep the darkness, but phrase it with control and awareness.
+
+### Priority tiers
+
+| Tier | Categories | Handling |
+|------|-----------|----------|
+| **CRITICAL** | 4 (Minors), 5 (Consent/coercion) | Must always provide a safer alternative. Never ship the risky version without explicit user override. |
+| **HIGH** | 3 (Identity/race/gender), 6 (Abuse/self-harm) | Must flag and strongly recommend a safer alternative. User may choose to keep original phrasing. |
+| **MEDIUM** | 1 (Politics), 2 (Religion), 7 (Platform/sponsor) | Must flag the risk. User decides whether to adjust. |
+
+### Category 4: Minors and age ambiguity [CRITICAL]
+
+If the cast is school-aged or age-ambiguous, avoid wording that intensifies sexual framing. Preserve tension, but do not make the subtitle more explicit than necessary. Sexual tension involving school settings where character age is unclear is high risk.
+
+### Category 5: Consent, coercion, and domination [CRITICAL]
+
+"Owner," "master," "obedience" in English escalate faster than in Chinese. Threats mixed with romance can read as abuse endorsement if phrased carelessly. Decide whether the scene function is survival, command, possession, or flirtation. Localize to the least inflammatory phrasing that still preserves the scene.
+
+Example: "我是你的主人" may become:
+- "Look at me. Stay with me."
+- "You answer to me."
+- "I'm the one keeping you alive."
+
+Do not default to literal dominance language unless the user explicitly accepts the risk.
+
+### Categories 1-3, 6-7
+
+- **Politics/geopolitical [MEDIUM]**: stay inside the fictional conflict; do not make English more politically charged than the Chinese original.
+- **Religion [MEDIUM]**: keep fictional cosmology fictional; prefer neutral supernatural wording over real-world sacred language.
+- **Identity/race/gender [HIGH]**: keep insults personal, situational, or power-based rather than identity-based. No slurs.
+- **Abuse/self-harm [HIGH]**: keep emotional stakes but strip wording that turns pain into fetish if not essential.
+- **Platform/sponsor [MEDIUM]**: if a safer wording preserves the same story function, prefer it.
+
+### Safety output
+
+When a scene contains sensitivity, note: risk level, trigger area and category tier, whether the localized line is safe as written, and a safer alternative if needed. For CRITICAL-tier flags (Cat 4/5), a safer alternative is **mandatory**.
+
+## Subtitle constraints
+
+| Parameter | Limit |
+|-----------|-------|
+| Latin chars/line | 42 max (including spaces) |
+| CJK chars/line | ~21 (each CJK = 2 Latin width) |
+| Lines per subtitle block | 2 max |
+| Reading speed | ~17 chars/sec (CPS) |
+| Minimum display | 1 second |
+| Maximum display | 7 seconds |
+
+**Line breaks:** Break at semantic boundaries (clause breaks, conjunctions). Never split names, compound words, number+unit, or article+noun. Prefer breaking before conjunctions.
+
+**Special markers:** ♪ for music, *italics* for inner monologue/off-screen voice, [SFX] for sound effects, (parentheses) for whispered delivery. CAPS sparingly for emphasis only.
+
+## Workflow — 3 phases
+
+### Phase 1: Triage and extract
+
+When input is a raw script or .docx file, classify and filter content before translation using the Content Triage tables above.
+
+For .docx input: run `scripts/extract_docx.py input.docx output.txt` if Python is available. If python-docx is not installed, use Python's built-in zipfile module to extract `word/document.xml`, parse `<w:t>` elements, and write plain text to a UTF-8 `.txt` file. Alternatively, run `scripts/triage.py extracted.txt` for auto-classification into JSONL.
+
+For pre-structured input or just a few dialogue lines, abbreviate this phase — triage still applies but skip JSONL formatting.
+
+Parse viewer-facing lines into structured records: ID, type (dialogue/narration/card), speaker, raw text, scene tag, emotion.
+
+### Phase 2: Localize
+
+For each viewer-facing line:
+1. Identify text function (dialogue, narration, card, threat, flirtation, comedy, emotional escalation).
+2. Diagnose why literal translation would fail and select adaptation strategy.
+3. Rewrite into target-language subtitle-ready text.
+4. Produce 3 variants (conservative / balanced / sharp) unless user requests otherwise.
+5. Output bilingual comparison: Chinese source, text type, plain meaning gloss, localized line, and adjustment note.
+
+For culture-locked references (marriage customs, internet slang, class markers, folk beliefs), read `references/culture-adaptation.md` and select a strategy: effect-equivalent swap, generalize, preserve + micro-gloss, or drop and rewrite.
+
+For tone-sensitive scenes (threats, flirtation, memes, possessive lines), read `references/tone-mapping.md` for rewrite patterns.
+
+For non-English targets, read `references/language-lanes.md` for language-specific pitfalls.
+
+**Batch mode (10+ episodes):** Default to balanced version only for speed. Build a series glossary after Episode 1 (character names, proper nouns, catchphrases) and lock it. Write one-line character voice cards after Episode 1 and reference them for all subsequent episodes. Process one episode at a time; never merge episodes.
+
+### Phase 3: Review and deliver
+
+1. **Safety pass:** Check all rewritten lines against the Safety Framework above. For any line touching Categories 4 or 5, a safer alternative is mandatory.
+2. **Subtitle pass:** Verify character limits (42 Latin / 21 CJK per line), reading speed (~17 CPS), and line break rules.
+3. **QA self-check:**
+   - Lines sound native, not translated
+   - Narration and cards read as viewer-facing copy
+   - Jokes, insults, threats land in the target language
+   - Character voices remain distinct and consistent
+   - No accidental tone inflation (cringe) or deflation (flat)
+   - Critical safety categories have safer alternatives provided
+   - Multi-version tradeoffs are easy to compare
+   - Bilingual format intact
+   - For multi-episode: glossary consistency verified across episodes
+4. **Output format:** Markdown tables for ≤100 lines; Word document for 101+ (use `scripts/to_docx.py` if python-docx is available, otherwise output markdown).
+
+## Output templates
+
+### Bilingual dialogue sheet
+
+| # | 文本类型 | 中文原句 | 字面意思 | 本地化英文 | 调整说明 |
+|---|---|---|---|---|---|
+| 1 | dialogue / narration / card | | | | |
+
+### Multi-version dialogue sheet
+
+| # | 文本类型 | 中文原句 | 字面意思 | Conservative | Balanced | Sharp | Risk note |
+|---|---|---|---|---|---|---|---|
+| 1 | dialogue / narration / card | | | | | | |
+
+Version guide: Conservative = safest for broad platforms; Balanced = default recommendation, closest to original effect; Sharp = stronger edge, include risk note.
+
+### Safety review snapshot
+
+| # | 中文原句 | 当前英文 | 风险点 | 是否建议调整 | 更安全替代 |
+|---|---|---|---|---|---|
+| 1 | | | | 是/否 | |
 
 ## Intake
 
-### Minimum required input
+**Required:** At least one of: raw dialogue, narration, on-screen text, or scene excerpt.
 
-- At least one of: raw dialogue, narration, on-screen text, or scene excerpt
+**Optional:** Character notes or relationship map, target market or tone, target language (default: English), subtitle or dub mode, .docx file with script.
 
-### Optional enrichment
+If input is insufficient to determine speaker relationships or emotional register, ask the user before guessing.
 
-- character notes or relationship map
-- target market or tone target
-- target language (default: English)
-- subtitle mode or dub mode
-- episode pages or broader context
-- .docx file (Word document) containing script or screenplay
+## References
 
-If the user gives only a scene and no market, default to globally legible English for subtitle-led export.
-If the input is insufficient to determine speaker relationships or emotional register, ask the user before guessing.
+The following files provide additional depth. Read them when the specific topic arises:
 
-## Supported default language lanes
-
-Offer these lanes first unless the user requests another language:
-
-- English
-- Spanish
-- Japanese
-- Korean
-- Thai
-- Indonesian
-- Vietnamese
-- Portuguese (Brazil)
-
-Use the user's requested language if it is outside this list. Keep the same localization principles, but adapt the examples and register to that language.
-
-## Load only what is needed
-
-- Read [`references/localization-rules.md`](references/localization-rules.md) for core rewrite rules for dialogue, narration, and subtitle cards.
-- Read [`references/tone-mapping.md`](references/tone-mapping.md) when the scene depends on flirting, threats, meme language, or stylized banter.
-- Read [`references/language-lanes.md`](references/language-lanes.md) when the user wants Spanish, Japanese, Korean, Thai, Indonesian, Vietnamese, Portuguese (Brazil), or multi-language comparison.
-- Read [`references/culture-adaptation.md`](references/culture-adaptation.md) when the scene contains culture-locked references (marriage customs, internet slang, class markers, folk beliefs, etc.) that need adaptation for international viewers.
-- Read [`references/export-safety-red-lines.md`](references/export-safety-red-lines.md) when the scene contains sensitive power dynamics, religion, politics, identity language, minors, coercion, or taboo content.
-- Use [`templates/bilingual-dialogue-sheet.md`](templates/bilingual-dialogue-sheet.md) for line-by-line output.
-- Use [`templates/scene-pass-summary.md`](templates/scene-pass-summary.md) when the user wants a quick assessment before rewriting.
-- Use [`templates/safety-review.md`](templates/safety-review.md) when the user wants a risk pass or when the scene is obviously sensitive.
-- Use [`templates/multi-version-dialogue-sheet.md`](templates/multi-version-dialogue-sheet.md) when the user wants version selection or language selection.
-- Use [`templates/extract-sheet.md`](templates/extract-sheet.md) when preprocessing raw scripts into structured JSONL before localization.
-- Use [`templates/qa-checklist.md`](templates/qa-checklist.md) for final quality assurance self-check.
-- Read [`references/subtitle-constraints.md`](references/subtitle-constraints.md) for character limits, reading speed, and line break rules.
-
-**Batch override:** For batch tasks (10+ episodes), load all reference files once before starting Episode 1. Do not re-read per episode.
-
-## Workflow
-
-0. **Content triage and extraction (MANDATORY for raw scripts).**
-   When the input is a raw script or .docx file, you MUST classify and filter content before any translation.
-   Apply the Content Triage table above: strip all production-side content, keep only viewer-facing lines.
-   Parse the viewer-facing lines into structured JSONL using [`templates/extract-sheet.md`](templates/extract-sheet.md).
-   Each line gets: ID, type classification, speaker, raw text, scene tag, relationship, emotion, and previous-line context.
-   **Do NOT skip this step for raw scripts.** Skipping it causes over-translation — agents will translate stage directions, scene headers, and production notes that viewers never see, wasting tokens and producing unusable output.
-   If the user provides pre-structured input or only a few lines of dialogue, this step may be abbreviated but triage still applies.
-   **Automation shortcut:** For .docx input, run `scripts/extract_docx.py` to extract text, then `scripts/triage.py` to auto-classify lines and generate JSONL. This replaces manual line-by-line triage and is strongly recommended for scripts over 100 lines.
-1. Identify the text function.
-   Decide whether each line is dialogue, narration, subtitle card, exposition, threat, flirtation, humiliation, comedy, or emotional escalation.
-2. Diagnose why literal translation would fail.
-   Flag stiffness, culture-locked wording, over-explaining, meme mismatch, or melodrama that will sound awkward in English.
-   For culture-locked references, select an adaptation strategy from [`references/culture-adaptation.md`](references/culture-adaptation.md): effect-equivalent swap, generalize, preserve + micro-gloss, or drop and rewrite.
-3. Select the target language and tone lane.
-   Decide whether the line should feel safer, balanced, or sharper in the target market.
-4. Rewrite into export-legible target-language scene text.
-   Keep dialogue actable, narration readable, and on-screen text concise.
-5. Produce variant choices.
-   By default, provide:
-   - conservative: safer for broad platforms and sponsors
-   - balanced: default recommendation, closest to original effect
-   - sharp: stronger edge, but include a risk note
-6. Output bilingual comparison.
-   Show the Chinese source, text type, a plain meaning gloss when useful, the localized target-language line, and a short note on why it works.
-7. Do a safety pass.
-   Check the rewritten lines against [`references/export-safety-red-lines.md`](references/export-safety-red-lines.md).
-8. Do a final subtitle pass.
-   Trim lines that read too long, too on-the-nose, or too translated.
-
-## Batch workflow (10+ episodes)
-
-When the input exceeds 10 episodes or 500 extracted viewer-facing lines, use this streamlined batch flow instead of the 8-step per-line workflow above.
-
-1. **Preprocessing (one-time):**
-   - Run `scripts/extract_docx.py` to extract plain text from .docx.
-   - Run `scripts/triage.py` to auto-classify and generate JSONL with triage report.
-   - Build a series glossary (character names, in-world terms, catchphrases) — lock after Episode 1.
-   - Write character voice cards (one-line voice descriptors per character).
-   - Load ALL reference files once upfront (see "Load only what is needed" — batch override).
-
-2. **Per-episode translation (independent per episode):**
-   - Load the episode's JSONL slice + glossary + voice cards.
-   - Merge Steps 1–6 into a single pass: output the bilingual table directly without separate diagnosis steps.
-   - Run safety review only on lines with high-risk emotion tags (threats, possession, coercion) or lines touching Categories 4–5.
-   - Skip three-version output unless the user requests it — default to balanced only for batch speed.
-
-3. **Batch QA and delivery (one-time, after all episodes):**
-   - Run `templates/qa-checklist.md` across the full series.
-   - Verify glossary consistency (no term drift between episodes).
-   - Generate final output via `scripts/to_docx.py` or the docx skill.
-
-## Output modes
-
-- Quick diagnosis: use [`templates/scene-pass-summary.md`](templates/scene-pass-summary.md)
-- Line-by-line bilingual localization: use [`templates/bilingual-dialogue-sheet.md`](templates/bilingual-dialogue-sheet.md)
-- Sensitive-content review: use [`templates/safety-review.md`](templates/safety-review.md)
-- Multi-version localization choice: use [`templates/multi-version-dialogue-sheet.md`](templates/multi-version-dialogue-sheet.md)
-- Raw script extraction: use [`templates/extract-sheet.md`](templates/extract-sheet.md)
-- QA self-check: use [`templates/qa-checklist.md`](templates/qa-checklist.md)
-- Full-series or multi-episode delivery: use the output routing thresholds below to decide format.
-
-### Output routing thresholds
-
-| Scale | Extracted lines | Output format |
-|-------|----------------|---------------|
-| Small | ≤100 | Markdown tables in chat |
-| Medium | 101–500 | Default to Word document; user may opt for markdown |
-| Large | 501+ | Word document (`scripts/to_docx.py` or docx skill) |
-
-For Word output, complete all localization and QA passes first, then generate the document. See [`templates/extract-sheet.md`](templates/extract-sheet.md) for batch processing and glossary tracking guidance.
-
-## Quality bar
-
-Before finalizing, check that:
-
-- the English line sounds native rather than translated
-- narration and on-screen text read naturally for viewers, not like production notes
-- the line length is subtitle-friendly
-- the joke, insult, tease, or threat lands in English
-- the character voice still feels distinct
-- the scene is not accidentally toned up into cringe or toned down into flatness
-- the scene does not casually cross obvious export red lines that could trigger platform, sponsor, or audience backlash
-- when multiple versions are provided, the tradeoff between conservative, balanced, and sharp is easy for the user to compare
+- `references/tone-mapping.md` — rewrite patterns for threats, flirtation, memes, possessive lines, narration cards
+- `references/culture-adaptation.md` — adaptation strategies for culture-locked references (marriage customs, internet slang, class markers, folk beliefs)
+- `references/language-lanes.md` — target-language guardrails for Spanish, Japanese, Korean, Thai, Indonesian, Vietnamese, Portuguese (Brazil)
+- `templates/extract-sheet.md` — JSONL field specification for structured extraction
+- `examples/e2e-yandere-dialogue.md` — worked example: possessive dialogue with safety pass
+- `examples/e2e-narration-cards.md` — worked example: narration and on-screen text cards
 
 ## Response style
 
 - Respond in the user's language unless asked otherwise.
 - Keep analysis concise and actionable.
-- When useful, separate:
-  - source issue
-  - localized line
-  - why it works
-  - risk note
+- When useful, separate: source issue, localized line, why it works, risk note.

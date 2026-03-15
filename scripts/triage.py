@@ -34,7 +34,7 @@ _RE_TAG_LINE = re.compile(
 )
 
 # Viewer-facing patterns → EXTRACT
-_RE_EPISODE_TITLE = re.compile(r"^第[一二三四五六七八九十百千\d]+[集章节回]")
+_RE_EPISODE_TITLE = re.compile(r"^第?[一二三四五六七八九十百千\d]+[集章节回]")
 _RE_EPISODE_END = re.compile(r"^（第[一二三四五六七八九十百千\d]+[集章节回][完]）")
 _RE_CARD_BRACKET = re.compile(r"^【.*】$")
 _RE_NARRATION = re.compile(r"^(旁白|画外音|电子音|广播|系统)[：:（(]")
@@ -73,7 +73,7 @@ _EPISODE_NUM_MAP = {
 
 def _parse_episode_num(text: str) -> int | None:
     """Try to extract episode number from a title line."""
-    m = re.search(r"第([一二三四五六七八九十百千]+|\d+)[集章节回]", text)
+    m = re.search(r"第?([一二三四五六七八九十百千]+|\d+)[集章节回]", text)
     if not m:
         return None
     raw = m.group(1)

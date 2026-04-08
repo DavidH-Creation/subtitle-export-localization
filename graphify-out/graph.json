@@ -1,0 +1,682 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "batch_merge.py",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_merge.py",
+      "source_location": "L1",
+      "id": "batch_merge",
+      "community": 3
+    },
+    {
+      "label": "_extract_ep_num()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_merge.py",
+      "source_location": "L21",
+      "id": "batch_merge_extract_ep_num",
+      "community": 3
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_merge.py",
+      "source_location": "L26",
+      "id": "batch_merge_main",
+      "community": 3
+    },
+    {
+      "label": "batch_split.py",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_split.py",
+      "source_location": "L1",
+      "id": "batch_split",
+      "community": 4
+    },
+    {
+      "label": "_extract_ep_num()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_split.py",
+      "source_location": "L20",
+      "id": "batch_split_extract_ep_num",
+      "community": 4
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_split.py",
+      "source_location": "L25",
+      "id": "batch_split_main",
+      "community": 4
+    },
+    {
+      "label": "extract_docx.py",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L1",
+      "id": "extract_docx",
+      "community": 1
+    },
+    {
+      "label": "extract_with_python_docx()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L17",
+      "id": "extract_docx_extract_with_python_docx",
+      "community": 1
+    },
+    {
+      "label": "extract_with_zipfile()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L25",
+      "id": "extract_docx_extract_with_zipfile",
+      "community": 1
+    },
+    {
+      "label": "extract()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L46",
+      "id": "extract_docx_extract",
+      "community": 1
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L54",
+      "id": "extract_docx_main",
+      "community": 1
+    },
+    {
+      "label": "Extract paragraphs using python-docx (preferred).",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L18",
+      "id": "extract_docx_rationale_18",
+      "community": 1
+    },
+    {
+      "label": "Fallback extract paragraphs via zipfile + xml.etree.",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L26",
+      "id": "extract_docx_rationale_26",
+      "community": 1
+    },
+    {
+      "label": "Extract paragraphs from a .docx file. Tries python-docx first, then zipfile.",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L47",
+      "id": "extract_docx_rationale_47",
+      "community": 1
+    },
+    {
+      "label": "to_docx.py",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L1",
+      "id": "to_docx",
+      "community": 2
+    },
+    {
+      "label": "_episode_from_id()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L34",
+      "id": "to_docx_episode_from_id",
+      "community": 2
+    },
+    {
+      "label": "build_document()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L40",
+      "id": "to_docx_build_document",
+      "community": 2
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L120",
+      "id": "to_docx_main",
+      "community": 2
+    },
+    {
+      "label": "Extract episode label from record ID like EP01_001.",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L35",
+      "id": "to_docx_rationale_35",
+      "community": 2
+    },
+    {
+      "label": "Build a Word document from translated JSONL records.",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L41",
+      "id": "to_docx_rationale_41",
+      "community": 2
+    },
+    {
+      "label": "triage.py",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L1",
+      "id": "triage",
+      "community": 0
+    },
+    {
+      "label": "_parse_episode_num()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L74",
+      "id": "triage_parse_episode_num",
+      "community": 0
+    },
+    {
+      "label": "classify_line()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L89",
+      "id": "triage_classify_line",
+      "community": 0
+    },
+    {
+      "label": "_merge_split_lines()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L212",
+      "id": "triage_merge_split_lines",
+      "community": 0
+    },
+    {
+      "label": "process_file()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L256",
+      "id": "triage_process_file",
+      "community": 0
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L323",
+      "id": "triage_main",
+      "community": 0
+    },
+    {
+      "label": "Try to extract episode number from a title line.",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L75",
+      "id": "triage_rationale_75",
+      "community": 0
+    },
+    {
+      "label": "Classify a single line. Returns a dict with extraction fields, or None to strip.",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L90",
+      "id": "triage_rationale_90",
+      "community": 0
+    },
+    {
+      "label": "Merge split-dialogue lines where speaker and text are on separate lines.",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L213",
+      "id": "triage_rationale_213",
+      "community": 0
+    },
+    {
+      "label": "Process an entire script file. Returns (jsonl_records, stats).",
+      "file_type": "rationale",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L257",
+      "id": "triage_rationale_257",
+      "community": 0
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_merge.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_src": "batch_merge",
+      "_tgt": "batch_merge_extract_ep_num",
+      "source": "batch_merge",
+      "target": "batch_merge_extract_ep_num",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_merge.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_src": "batch_merge",
+      "_tgt": "batch_merge_main",
+      "source": "batch_merge",
+      "target": "batch_merge_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_merge.py",
+      "source_location": "L81",
+      "weight": 0.8,
+      "_src": "batch_merge_main",
+      "_tgt": "batch_merge_extract_ep_num",
+      "source": "batch_merge_extract_ep_num",
+      "target": "batch_merge_main",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_split.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_src": "batch_split",
+      "_tgt": "batch_split_extract_ep_num",
+      "source": "batch_split",
+      "target": "batch_split_extract_ep_num",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_split.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_src": "batch_split",
+      "_tgt": "batch_split_main",
+      "source": "batch_split",
+      "target": "batch_split_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\batch_split.py",
+      "source_location": "L53",
+      "weight": 0.8,
+      "_src": "batch_split_main",
+      "_tgt": "batch_split_extract_ep_num",
+      "source": "batch_split_extract_ep_num",
+      "target": "batch_split_main",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "extract_docx",
+      "_tgt": "extract_docx_extract_with_python_docx",
+      "source": "extract_docx",
+      "target": "extract_docx_extract_with_python_docx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "_src": "extract_docx",
+      "_tgt": "extract_docx_extract_with_zipfile",
+      "source": "extract_docx",
+      "target": "extract_docx_extract_with_zipfile",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L46",
+      "weight": 1.0,
+      "_src": "extract_docx",
+      "_tgt": "extract_docx_extract",
+      "source": "extract_docx",
+      "target": "extract_docx_extract",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_src": "extract_docx",
+      "_tgt": "extract_docx_main",
+      "source": "extract_docx",
+      "target": "extract_docx_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L49",
+      "weight": 0.8,
+      "_src": "extract_docx_extract",
+      "_tgt": "extract_docx_extract_with_python_docx",
+      "source": "extract_docx_extract_with_python_docx",
+      "target": "extract_docx_extract",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "_src": "extract_docx_rationale_18",
+      "_tgt": "extract_docx_extract_with_python_docx",
+      "source": "extract_docx_extract_with_python_docx",
+      "target": "extract_docx_rationale_18",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L51",
+      "weight": 0.8,
+      "_src": "extract_docx_extract",
+      "_tgt": "extract_docx_extract_with_zipfile",
+      "source": "extract_docx_extract_with_zipfile",
+      "target": "extract_docx_extract",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "_src": "extract_docx_rationale_26",
+      "_tgt": "extract_docx_extract_with_zipfile",
+      "source": "extract_docx_extract_with_zipfile",
+      "target": "extract_docx_rationale_26",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L71",
+      "weight": 0.8,
+      "_src": "extract_docx_main",
+      "_tgt": "extract_docx_extract",
+      "source": "extract_docx_extract",
+      "target": "extract_docx_main",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\extract_docx.py",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_src": "extract_docx_rationale_47",
+      "_tgt": "extract_docx_extract",
+      "source": "extract_docx_extract",
+      "target": "extract_docx_rationale_47",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "to_docx",
+      "_tgt": "to_docx_episode_from_id",
+      "source": "to_docx",
+      "target": "to_docx_episode_from_id",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_src": "to_docx",
+      "_tgt": "to_docx_build_document",
+      "source": "to_docx",
+      "target": "to_docx_build_document",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L120",
+      "weight": 1.0,
+      "_src": "to_docx",
+      "_tgt": "to_docx_main",
+      "source": "to_docx",
+      "target": "to_docx_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L52",
+      "weight": 0.8,
+      "_src": "to_docx_build_document",
+      "_tgt": "to_docx_episode_from_id",
+      "source": "to_docx_episode_from_id",
+      "target": "to_docx_build_document",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L35",
+      "weight": 1.0,
+      "_src": "to_docx_rationale_35",
+      "_tgt": "to_docx_episode_from_id",
+      "source": "to_docx_episode_from_id",
+      "target": "to_docx_rationale_35",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L163",
+      "weight": 0.8,
+      "_src": "to_docx_main",
+      "_tgt": "to_docx_build_document",
+      "source": "to_docx_build_document",
+      "target": "to_docx_main",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\to_docx.py",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_src": "to_docx_rationale_41",
+      "_tgt": "to_docx_build_document",
+      "source": "to_docx_build_document",
+      "target": "to_docx_rationale_41",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L74",
+      "weight": 1.0,
+      "_src": "triage",
+      "_tgt": "triage_parse_episode_num",
+      "source": "triage",
+      "target": "triage_parse_episode_num",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L89",
+      "weight": 1.0,
+      "_src": "triage",
+      "_tgt": "triage_classify_line",
+      "source": "triage",
+      "target": "triage_classify_line",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L212",
+      "weight": 1.0,
+      "_src": "triage",
+      "_tgt": "triage_merge_split_lines",
+      "source": "triage",
+      "target": "triage_merge_split_lines",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L256",
+      "weight": 1.0,
+      "_src": "triage",
+      "_tgt": "triage_process_file",
+      "source": "triage",
+      "target": "triage_process_file",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L323",
+      "weight": 1.0,
+      "_src": "triage",
+      "_tgt": "triage_main",
+      "source": "triage",
+      "target": "triage_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L279",
+      "weight": 0.8,
+      "_src": "triage_process_file",
+      "_tgt": "triage_parse_episode_num",
+      "source": "triage_parse_episode_num",
+      "target": "triage_process_file",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_src": "triage_rationale_75",
+      "_tgt": "triage_parse_episode_num",
+      "source": "triage_parse_episode_num",
+      "target": "triage_rationale_75",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L285",
+      "weight": 0.8,
+      "_src": "triage_process_file",
+      "_tgt": "triage_classify_line",
+      "source": "triage_classify_line",
+      "target": "triage_process_file",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L90",
+      "weight": 1.0,
+      "_src": "triage_rationale_90",
+      "_tgt": "triage_classify_line",
+      "source": "triage_classify_line",
+      "target": "triage_rationale_90",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L263",
+      "weight": 0.8,
+      "_src": "triage_process_file",
+      "_tgt": "triage_merge_split_lines",
+      "source": "triage_merge_split_lines",
+      "target": "triage_process_file",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L213",
+      "weight": 1.0,
+      "_src": "triage_rationale_213",
+      "_tgt": "triage_merge_split_lines",
+      "source": "triage_merge_split_lines",
+      "target": "triage_rationale_213",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L348",
+      "weight": 0.8,
+      "_src": "triage_main",
+      "_tgt": "triage_process_file",
+      "source": "triage_process_file",
+      "target": "triage_main",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "C:\\Users\\david\\dev\\subtitle-export-localization\\scripts\\triage.py",
+      "source_location": "L257",
+      "weight": 1.0,
+      "_src": "triage_rationale_257",
+      "_tgt": "triage_process_file",
+      "source": "triage_process_file",
+      "target": "triage_rationale_257",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}
